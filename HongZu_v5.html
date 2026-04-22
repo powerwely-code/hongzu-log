@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>弘如榮耀制度</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,'PingFang TC','Microsoft JhengHei',sans-serif;background:#eef2f7;min-height:100vh}
+#app{max-width:480px;margin:0 auto;display:flex;flex-direction:column;min-height:100vh}
+.top{background:#0A2540;margin:0 8px;border-radius:0 0 20px 20px;padding:12px 16px;position:sticky;top:0;z-index:9}
+.top-row{display:flex;align-items:center;gap:10px}
+.logo-box{background:#fff;border-radius:8px;padding:4px 8px;display:flex;align-items:center;flex-shrink:0}
+.logo-box img{height:22px;display:block}
+.top-title{color:#00A8E8;font-size:13px;font-weight:800}
+.top-sub{color:rgba(255,255,255,0.4);font-size:10px;margin-top:1px}
+.pbar{height:3px;background:#1e3a5f;margin:0 8px}
+.pfill{height:3px;background:#00A8E8;width:0%;transition:width .3s}
+.body{flex:1;padding:14px;overflow-y:auto}
+.card{background:#fff;border-radius:18px;padding:22px 18px;box-shadow:0 1px 6px rgba(0,0,0,.07);margin-bottom:14px}
+.slbl{color:#00A8E8;font-size:10px;font-weight:800;letter-spacing:2px;margin-bottom:7px}
+.h1{font-size:21px;font-weight:800;color:#0A2540;line-height:1.3;margin-bottom:5px}
+.sub{color:#64748b;font-size:13px;line-height:1.5;margin-bottom:18px}
+.lbl{display:block;font-size:10px;font-weight:800;color:#475569;letter-spacing:1.5px;margin-bottom:6px}
+select,input[type=text],input[type=date],textarea{display:block;width:100%;padding:13px 15px;border:2px solid #e2e8f0;border-radius:13px;font-size:16px;color:#0A2540;background:#fff;font-family:inherit;outline:none;margin-bottom:13px;-webkit-appearance:none}
+select:focus,input:focus,textarea:focus{border-color:#00A8E8}
+select{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right 14px center;padding-right:40px}
+textarea{min-height:82px;resize:vertical;line-height:1.6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
+.btn-item{padding:15px 6px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;text-align:center;font-family:inherit;transition:all .12s}
+.btn-item:active{transform:scale(.96)}
+.bi-ico{font-size:24px;display:block;margin-bottom:5px}
+.bi-txt{font-size:13px;font-weight:800}
+.bi-wt{font-size:10px;display:block;margin-top:2px}
+.btn-full{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-family:inherit;transition:all .12s;text-align:left}
+.btn-full:active{transform:scale(.98)}
+.sbtn{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border-radius:14px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-family:inherit;text-align:left;margin-bottom:9px;transition:all .12s}
+.sbtn:active{transform:scale(.98)}
+.spt{padding:3px 9px;border-radius:7px;font-size:13px;font-weight:800;background:#f1f5f9;color:#94a3b8;flex-shrink:0}
+.brow{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.pb{padding:9px 12px;border-radius:9px;border:2px solid #e2e8f0;background:#fff;color:#64748b;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+.pb:active{transform:scale(.95)}
+.pb.bl{border-color:#bae6fd;background:#f0f9ff;color:#0284c7}
+.warn{background:#fff7ed;border:2px solid #fed7aa;border-radius:9px;padding:10px 13px;margin-top:9px;color:#92400e;font-size:12px;line-height:1.5}
+.okbox{background:#f0fdf4;border:2px solid #86efac;border-radius:9px;padding:10px 13px;margin-top:9px;color:#16a34a;font-size:12px;font-weight:700}
+.aibox{background:#f0f9ff;border:2px solid #bae6fd;border-radius:13px;padding:14px;margin-top:11px}
+.aitag{color:#0284c7;font-size:10px;font-weight:900;letter-spacing:1.5px;margin-bottom:6px}
+.aitxt{color:#0A2540;font-size:12px;line-height:1.6}
+.aibtn{margin-top:9px;padding:7px 13px;border-radius:7px;border:none;background:#0284c7;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.pwrap{margin-top:10px;position:relative}
+.pwrap img{width:100%;border-radius:13px;border:2px solid #e2e8f0;display:block}
+.pdel{position:absolute;top:7px;right:7px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:27px;height:27px;cursor:pointer;font-size:13px}
+.scard{background:linear-gradient(135deg,#0A2540,#1e4080);border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
+.sc-tag{color:#00A8E8;font-size:10px;font-weight:900;letter-spacing:2px;margin-bottom:3px}
+.sc-pts{font-size:50px;font-weight:900;color:#00A8E8;line-height:1}
+.sc-sub{color:rgba(255,255,255,.4);font-size:11px;margin-top:4px}
+.sr{display:flex;gap:9px;padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:12px}
+.sk2{color:#94a3b8;font-weight:700;min-width:56px;flex-shrink:0}
+.sv{color:#0A2540;font-weight:600;flex:1}
+.foot{padding:11px 14px 18px;display:flex;gap:9px;background:#eef2f7}
+.back{flex:0 0 66px;padding:13px;border:2px solid #e2e8f0;border-radius:13px;background:#fff;color:#64748b;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.nxt{flex:1;padding:13px;border:none;border-radius:13px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
+.on{background:#0A2540;color:#fff}
+.off{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
+.subbtn{width:100%;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,#00A8E8,#0070CC);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:3px}
+.subbtn:active{transform:scale(.98)}
+.rstbtn{width:100%;padding:13px;border:2px solid #e2e8f0;border-radius:13px;background:#fff;color:#64748b;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:9px}
+.prtbtn{width:100%;padding:13px;border:2px solid #bae6fd;border-radius:13px;background:#f0f9ff;color:#0284c7;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:9px}
+.stbtn{width:100%;padding:16px;border:none;border-radius:14px;background:#0A2540;color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.sguide{background:#f8fafc;border-radius:13px;padding:14px;margin-bottom:18px}
+.sgrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #e2e8f0;font-size:13px;align-items:center}
+.sgrow:last-child{border-bottom:none}
+.sgpt{font-weight:900;padding:2px 8px;border-radius:6px;font-size:13px}
+.dots{display:flex;gap:5px;justify-content:center;padding:8px 0 1px}
+.dot{width:6px;height:6px;border-radius:50%;background:#cbd5e1;transition:all .2s}
+.dot.a{background:#00A8E8;width:17px;border-radius:3px}
+.dot.d{background:#16a34a}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid #bae6fd;border-top-color:#0284c7;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:4px}
+@keyframes sp{to{transform:rotate(360deg)}}
+input[type=file]{display:none}
+@media print{.top,.foot,.dw,.brow,.aibox{display:none!important}.scard{background:#0A2540!important;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="top">
+    <div class="top-row">
+      <div class="logo-box"><img src="data:image/png;base64,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" alt="HZ"></div>
+      <div><div class="top-title">弘如榮耀制度</div><div class="top-sub">精實營運日誌 · 主管試用版 v4.0</div></div>
+    </div>
+  </div>
+  <div class="pbar"><div class="pfill" id="pf"></div></div>
+  <div class="body" id="bd"><div class="card" id="mc"></div></div>
+  <div class="foot" id="ft" style="display:none">
+    <button class="back" id="bk" onclick="prev()">← 返回</button>
+    <button class="nxt off" id="nx" onclick="nxt()">下一步 →</button>
+  </div>
+</div>
+<input type="file" id="ci" accept="image/*" capture="environment" onchange="onPh(event)">
+<input type="file" id="gi" accept="image/*" onchange="onPh(event)">
+<script>
+
+var GAS="https://script.google.com/macros/s/AKfycbx5EjmZfb_SGMPdWbBm7wNXRn2_NcfC4lfyGwOyKXtlD_xmyYK1oKQxgkJ0oH36NOTK/exec";
+var GKEY="AIzaSyD_sbCw3SxAbN-lOv1ao_wAZTRnJwTk454";
+var DEPTS=["管理部","生產部","技術部","供應鏈部","資訊課","業務部","財務部"];
+var ITEMS=[
+  {k:"交期",e:"📅",c:"#2563eb",w:"30%"},
+  {k:"品質",e:"✅",c:"#7c3aed",w:"25%"},
+  {k:"效率",e:"⚡",c:"#d97706",w:"20%"},
+  {k:"務實",e:"🎯",c:"#0891b2",w:"15%"},
+  {k:"創新",e:"💡",c:"#db2477",w:"10%"}
+];
+var STATS=[
+  {k:"可控",e:"🟢",s:"+1",d:"已掌握，事情正常推進中"},
+  {k:"已介入",e:"🟡",s:"+2",d:"有卡點，我今天已採取行動"},
+  {k:"需立即處理",e:"🔴",s:"+2",d:"緊急異常，需要上層知道"}
+];
+var BAD=["加強","持續改善","持續","努力","繼續","改善中","待確認","有在追","持續處理","持續追蹤","有問題","待處理"];
+var step=0;
+var D={dept:"",owner:"",item:"",isTask:false,status:"",issue:"",action:"",closeC:"",closeD:"",photo:null};
+var AI=null,busy=false,rc=null;
+
+function ok(){
+  if(step===1)return D.dept.length>0&&D.owner.trim().length>0;
+  if(step===2)return !!(D.item||D.isTask);
+  if(step===3)return D.status.length>0;
+  if(step===4)return D.issue.trim().length>=4;
+  if(step===5)return D.action.trim().length>=4;
+  if(step===6)return D.closeD.length>0;
+  return true;
+}
+
+function upd(){
+  var ft=document.getElementById("ft");
+  var nx=document.getElementById("nx");
+  var pf=document.getElementById("pf");
+  var hide=(step===0||step===7||step===8);
+  ft.style.display=hide?"none":"flex";
+  if(!hide){
+    var g=ok();
+    nx.className="nxt "+(g?"on":"off");
+    nx.textContent=(step===6)?"預覽確認 →":"下一步 →";
+  }
+  if(step>0&&step<8) pf.style.width=(step/7*100)+"%";
+  else if(step===8) pf.style.width="100%";
+  else pf.style.width="0%";
+  document.getElementById("bk").style.display=step>1?"block":"none";
+}
+
+function nxt(){if(ok()){step++;render();}}
+function prev(){if(step>1){step--;render();}}
+function ck(){upd();}
+
+function setDots(){
+  var dw=document.querySelector(".dw");
+  if(dw)dw.remove();
+  if(step===0||step===8)return;
+  dw=document.createElement("div");
+  dw.className="dw";
+  var h='<div class="dots">';
+  for(var i=1;i<=7;i++){
+    var c="dot";
+    if(i<step)c+=" d";
+    else if(i===step)c+=" a";
+    h+='<div class="'+c+'"></div>';
+  }
+  h+='</div>';
+  dw.innerHTML=h;
+  var mc=document.getElementById("mc");
+  mc.parentElement.insertBefore(dw,mc.nextSibling);
+}
+
+function render(){
+  var mc=document.getElementById("mc");
+  document.getElementById("bd").scrollTop=0;
+  upd();
+  if(step===0){rW();setDots();return;}
+  if(step===1){r1();setDots();return;}
+  if(step===2){r2();setDots();return;}
+  if(step===3){r3();setDots();return;}
+  if(step===4){r4();setDots();return;}
+  if(step===5){r5();setDots();return;}
+  if(step===6){r6();setDots();return;}
+  if(step===7){r7();setDots();return;}
+  if(step===8){rDone();setDots();return;}
+}
+
+function el(tag,cls,html,style){
+  var s=style?' style="'+style+'"':'';
+  var c=cls?' class="'+cls+'"':'';
+  return '<'+tag+c+s+'>'+html+'</'+tag+'>';
+}
+
+function rW(){
+  var mc=document.getElementById("mc");
+  mc.innerHTML=
+    '<div style="text-align:center;font-size:50px;margin-bottom:14px">📋</div>'+
+    '<div class="h1" style="text-align:center;margin-bottom:7px">精實營運日誌</div>'+
+    '<p class="sub" style="text-align:center;margin-bottom:18px">3分鐘填完 · AI協助把關 · 自動存入雲端</p>'+
+    '<div class="sguide">'+
+      '<div style="font-size:10px;font-weight:800;color:#94a3b8;letter-spacing:2px;margin-bottom:9px">今日得分規則</div>'+
+      '<div class="sgrow"><span style="color:#475569">先發現並記錄異常</span><span class="sgpt" style="background:#dcfce7;color:#16a34a">+1</span></div>'+
+      '<div class="sgrow"><span style="color:#475569">採取行動、解決異常</span><span class="sgpt" style="background:#dbeafe;color:#2563eb">+2</span></div>'+
+      '<div class="sgrow"><span style="color:#475569">異常完全結案（2個月不再發）</span><span class="sgpt" style="background:#ede9fe;color:#7c3aed">+5</span></div>'+
+      '<div class="sgrow"><span style="color:#dc2626">不查異常 / 填虛話</span><span class="sgpt" style="background:#fee2e2;color:#dc2626">-2/-5</span></div>'+
+    '</div>'+
+    '<button class="stbtn" onclick="step=1;render()">開始填寫今日日誌 →</button>';
+  document.getElementById("ft").style.display="none";
+}
+
+function r1(){
+  var mc=document.getElementById("mc");
+  var opts='<option value="">-- 請選擇部門 --</option>';
+  DEPTS.forEach(function(d){opts+='<option'+(D.dept===d?" selected":"")+'>'+d+'</option>';});
+  mc.innerHTML=
+    '<div class="slbl">STEP 1 / 6 — 身份確認</div>'+
+    '<div class="h1">你是哪位？</div>'+
+    '<p class="sub">選擇部門和填入姓名</p>'+
+    '<label class="lbl">部門</label>'+
+    '<select id="dSel" onchange="D.dept=this.value;ck()">'+opts+'</select>'+
+    '<label class="lbl">姓名 / Owner</label>'+
+    '<input type="text" id="owIn" placeholder="輸入你的名字" value="'+D.owner+'" oninput="D.owner=this.value;ck()">';
+}
+
+function r2(){
+  var mc=document.getElementById("mc");
+  var h='<div class="slbl">STEP 2 / 6 — 類型選擇</div>'+
+    '<div class="h1">今天記錄什麼？</div>'+
+    '<p class="sub">選擇五大指標，或回報上級交辦任務</p>'+
+    '<div class="grid">';
+  ITEMS.forEach(function(it){
+    var a=(D.item===it.k&&!D.isTask);
+    h+='<button class="btn-item" ';
+    h+='style="border-color:'+(a?it.c:"#e2e8f0")+';background:'+(a?it.c+"15":"#fff")+'" ';
+    h+='onclick="D.item=\''+it.k+'\';D.isTask=false;r2();ck();">';
+    h+='<span class="bi-ico">'+it.e+'</span>';
+    h+='<span class="bi-txt" style="color:'+(a?it.c:"#475569")+'">'+it.k+'</span>';
+    h+='<span class="bi-wt" style="color:'+(a?it.c:"#94a3b8")+'">'+it.w+'</span>';
+    h+='</button>';
+  });
+  var b=D.isTask;
+  h+='<button class="btn-full" ';
+  h+='style="border-color:'+(b?"#0f766e":"#e2e8f0")+';background:'+(b?"#f0fdf4":"#fff")+'" ';
+  h+='onclick="D.item=\'上級交辦任務\';D.isTask=true;r2();ck();">';
+  h+='<span style="font-size:24px;flex-shrink:0">📋</span>';
+  h+='<div>';
+  h+='<div style="font-size:14px;font-weight:800;color:'+(b?"#0f766e":"#475569")+'">上級交辦任務</div>';
+  h+='<div style="font-size:11px;color:'+(b?"#0f766e":"#94a3b8")+'">主管指派的特定任務</div>';
+  h+='</div></button></div>';
+  mc.innerHTML=h;
+}
+
+function r3(){
+  var mc=document.getElementById("mc");
+  var h='<div class="slbl">STEP 3 / 6 — 當前狀態</div>'+
+    '<div class="h1">今天的狀態？</div>'+
+    '<p class="sub">如實填寫——這是幫助解決問題的</p>';
+  STATS.forEach(function(st){
+    var a=(D.status===st.k);
+    var col=st.k==="可控"?"#16a34a":st.k==="已介入"?"#b45309":"#dc2626";
+    var bg=st.k==="可控"?"#f0fdf4":st.k==="已介入"?"#fefce8":"#fef2f2";
+    h+='<button class="sbtn" ';
+    h+='style="border-color:'+(a?col:"#e2e8f0")+';background:'+(a?bg:"#fff")+'" ';
+    h+='onclick="D.status=\''+st.k+'\';r3();ck();">';
+    h+='<span style="font-size:26px;flex-shrink:0">'+st.e+'</span>';
+    h+='<div style="flex:1">';
+    h+='<div style="font-size:14px;font-weight:800;color:'+(a?col:"#0A2540")+'">'+st.k+'</div>';
+    h+='<div style="font-size:11px;color:#64748b;margin-top:2px">'+st.d+'</div>';
+    h+='</div>';
+    h+='<div class="spt" style="background:'+(a?col+"20":"#f1f5f9")+';color:'+(a?col:"#94a3b8")+'">'+st.s+'</div>';
+    h+='</button>';
+  });
+  mc.innerHTML=h;
+}
+
+function r4(){
+  var mc=document.getElementById("mc");
+  var hv=BAD.some(function(w){return D.issue.indexOf(w)>=0;});
+  mc.innerHTML=
+    '<div class="slbl">STEP 4 / 6 — 卡點描述</div>'+
+    '<div class="h1">一句話說卡點</div>'+
+    '<p class="sub">虛話系統會警告，請具體說明</p>'+
+    '<textarea id="tI" placeholder="例：試模後厚度不均，最薄0.18mm低於規格0.22mm..." oninput="D.issue=this.value;ck();ckV()">'+D.issue+'</textarea>'+
+    '<div class="brow">'+
+      '<button class="pb" onclick="voice(\'issue\')">🎤 語音</button>'+
+      '<button class="pb bl" id="aib" onclick="doAI()">✨ AI 協助</button>'+
+    '</div>'+
+    (hv?'<div class="warn">⚠️ 偵測到模糊描述！請說清楚：什麼事 + 哪個環節 + 影響是什麼</div>':'')+
+    '<div id="afb"></div>';
+  if(AI)rAI();
+}
+
+function r5(){
+  var mc=document.getElementById("mc");
+  mc.innerHTML=
+    '<div class="slbl">STEP 5 / 6 — 今日動作</div>'+
+    '<div class="h1">今天做了什麼？</div>'+
+    '<p class="sub">做了什麼 ＋ 產出物是什麼</p>'+
+    '<textarea id="tA" placeholder="例：完成試模厚度報告（PDF），已寄客戶確認..." oninput="D.action=this.value;ck()">'+D.action+'</textarea>'+
+    '<div class="brow">'+
+      '<button class="pb" onclick="voice(\'action\')">🎤 語音</button>'+
+      '<button class="pb" onclick="document.getElementById(\'ci\').click()">📷 拍照</button>'+
+      '<button class="pb" onclick="document.getElementById(\'gi\').click()">🖼️ 相簿</button>'+
+      (AI&&AI.as?'<button class="pb bl" onclick="apA()">✨ AI建議</button>':'')+
+    '</div>'+
+    '<div id="pw"></div>'+
+    (AI&&AI.as?'<div class="aibox"><div class="aitag">✨ AI 建議動作</div><div class="aitxt">'+AI.as+'</div></div>':'');
+  rPh();
+}
+
+function r6(){
+  var mc=document.getElementById("mc");
+  mc.innerHTML=
+    '<div class="slbl">STEP 6 / 6 — 結案條件</div>'+
+    '<div class="h1">怎麼算結案？</div>'+
+    '<p class="sub">結案 = 問題解決 ＋ 防再發</p>'+
+    '<label class="lbl">結案條件</label>'+
+    '<textarea id="tC" placeholder="例：客戶書面確認符合規格，且2個月內未再發..." oninput="D.closeC=this.value">'+D.closeC+'</textarea>'+
+    (AI&&AI.cs?'<button class="pb bl" style="margin-bottom:12px" onclick="apC()">✨ AI 建議結案條件</button>':'')+
+    '<label class="lbl">預計結案日</label>'+
+    '<input type="date" id="dateIn" value="'+D.closeD+'" min="'+new Date().toISOString().split("T")[0]+'" onchange="D.closeD=this.value;ck()">';
+}
+
+function r7(){
+  var mc=document.getElementById("mc");
+  var st=STATS.find(function(x){return x.k===D.status;});
+  var rows=[
+    ["部門",D.dept],["Owner",D.owner],
+    ["類型",D.isTask?"📋 上級交辦任務":"📊 "+D.item],
+    ["狀態",(st?st.e+" ":"")+D.status],
+    ["卡點",D.issue],["今日動作",D.action]
+  ];
+  if(D.closeC)rows.push(["結案條件",D.closeC]);
+  if(D.closeD)rows.push(["預計結案",D.closeD]);
+  var rowsHtml=rows.map(function(r){
+    return '<div class="sr"><span class="sk2">'+r[0]+'</span><span class="sv">'+r[1]+'</span></div>';
+  }).join("");
+  mc.innerHTML=
+    '<div class="slbl">確認送出</div>'+
+    '<div class="h1">確認你的日誌</div>'+
+    '<div class="scard">'+
+      '<div class="sc-tag">今日預計得分</div>'+
+      '<div class="sc-pts">'+(st?st.s:"+1")+'</div>'+
+      '<div class="sc-sub">'+D.dept+' · '+D.owner+'</div>'+
+    '</div>'+
+    '<div style="background:#f8fafc;border-radius:13px;overflow:hidden;margin-bottom:13px">'+rowsHtml+'</div>'+
+    (D.photo?'<img src="'+D.photo+'" style="width:100%;border-radius:13px;margin-bottom:13px;display:block">':'')+
+    '<button class="subbtn" id="sb" onclick="doSub()">確認送出 ✓</button>'+
+    '<button style="width:100%;padding:12px;border:none;background:transparent;color:#94a3b8;font-size:12px;cursor:pointer;margin-top:7px;font-family:inherit" onclick="step=6;render()">← 修改</button>';
+  document.getElementById("ft").style.display="none";
+}
+
+function rDone(){
+  var mc=document.getElementById("mc");
+  var st=STATS.find(function(x){return x.k===D.status;});
+  mc.innerHTML=
+    '<div style="text-align:center;font-size:54px;margin-bottom:14px">✅</div>'+
+    '<div class="h1" style="text-align:center">日誌已送出！</div>'+
+    '<p class="sub" style="text-align:center;margin-bottom:16px">資料已存入 Google Sheets</p>'+
+    '<div class="scard">'+
+      '<div class="sc-tag">今日得分</div>'+
+      '<div class="sc-pts">'+(st?st.s:"+1")+'</div>'+
+      '<div class="sc-sub">'+D.dept+' · '+D.owner+'</div>'+
+    '</div>'+
+    '<div style="background:#f8fafc;border-radius:13px;overflow:hidden;margin-bottom:13px">'+
+      '<div class="sr"><span class="sk2">狀態</span><span class="sv">'+(st?st.e+" ":"")+D.status+'</span></div>'+
+      '<div class="sr"><span class="sk2">卡點</span><span class="sv">'+D.issue+'</span></div>'+
+      '<div class="sr"><span class="sk2">今日動作</span><span class="sv">'+D.action+'</span></div>'+
+    '</div>'+
+    (D.photo?'<img src="'+D.photo+'" style="width:100%;border-radius:13px;margin-bottom:11px;display:block">':'')+
+    '<button class="prtbtn" onclick="window.print()">🖨️ 列印紙本表單</button>'+
+    '<button class="rstbtn" onclick="rst()">＋ 再填一筆</button>';
+  document.getElementById("ft").style.display="none";
+  document.getElementById("pf").style.width="100%";
+}
+
+async function doSub(){
+  if(busy)return;
+  busy=true;
+  var sb=document.getElementById("sb");
+  if(sb){sb.innerHTML='<span class="spin"></span>送出中...';sb.disabled=true;}
+  var st=STATS.find(function(x){return x.k===D.status;});
+  try{
+    await fetch(GAS,{
+      method:"POST",mode:"no-cors",
+      body:JSON.stringify({
+        dept:D.dept,owner:D.owner,
+        item:D.isTask?"上級交辦任務":D.item,
+        status:D.status,issue:D.issue,action:D.action,
+        closeCondition:D.closeC,closeDate:D.closeD,
+        score:st?st.s:"+1",photo:D.photo?"[附照片]":""
+      })
+    });
+  }catch(e){}
+  busy=false;step=8;render();
+}
+
+async function doAI(){
+  var btn=document.getElementById("aib");
+  if(btn){btn.innerHTML='<span class="spin"></span>分析中...';btn.disabled=true;}
+  try{
+    var prompt="你是弘如企業精實營運日誌助手，請用繁體中文回覆純JSON，不加反引號。"
+      +"部門:"+D.dept+" 指標:"+(D.isTask?"上級交辦任務":D.item)+" 狀態:"+D.status
+      +" 卡點:"+D.issue+" 現有動作:"+(D.action||"未填")
+      +" 格式:{\"ok\":true或false,\"warn\":\"若描述不具體請說明否則null\",\"as\":\"建議今日動作含產出物\",\"cs\":\"建議結案條件含防再發\"}";
+    var res=await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key="+GKEY,
+      {method:"POST",headers:{"Content-Type":"application/json"},
+       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.3,maxOutputTokens:400}})
+      }
+    );
+    var j=await res.json();
+    var t=j.candidates[0].content.parts[0].text.replace(/```json|```/g,"").trim();
+    AI=JSON.parse(t);
+    rAI();
+  }catch(e){
+    console.error(e);
+    var fb=document.getElementById("afb");
+    if(fb)fb.innerHTML='<div class="warn">⚠️ AI 暫時無法連線，請手動填寫</div>';
+  }
+  if(btn){btn.innerHTML="✨ AI 協助";btn.disabled=false;}
+}
+
+function rAI(){
+  var fb=document.getElementById("afb");
+  if(!fb||!AI)return;
+  var h="";
+  if(!AI.ok&&AI.warn)h+='<div class="warn">⚠️ '+AI.warn+'</div>';
+  else if(AI.ok)h+='<div class="okbox">✓ 描述具體，可以繼續！</div>';
+  if(AI.as)h+='<div class="aibox"><div class="aitag">✨ AI 建議今日動作</div><div class="aitxt">'+AI.as+'</div><button class="aibtn" onclick="apA()">套用</button></div>';
+  fb.innerHTML=h;
+}
+
+function apA(){if(AI&&AI.as){D.action=AI.as;step=5;render();}}
+function apC(){if(AI&&AI.cs){D.closeC=AI.cs;var t=document.getElementById("tC");if(t)t.value=D.closeC;}}
+
+function ckV(){
+  var ta=document.getElementById("tI");
+  if(!ta)return;
+  var hv=BAD.some(function(w){return D.issue.indexOf(w)>=0;});
+  var w=document.querySelector(".warn");
+  if(hv&&!w)ta.insertAdjacentHTML("afterend",'<div class="warn">⚠️ 偵測到模糊描述！請說清楚：什麼事 + 哪個環節 + 影響是什麼</div>');
+  else if(!hv&&w)w.remove();
+}
+
+function onPh(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(ev){D.photo=ev.target.result;rPh();};
+  rd.readAsDataURL(f);
+}
+function rPh(){
+  var pw=document.getElementById("pw");
+  if(!pw)return;
+  pw.innerHTML=D.photo
+    ?'<div class="pwrap"><img src="'+D.photo+'" alt="照片"><button class="pdel" onclick="D.photo=null;rPh()">✕</button></div>'
+    :'';
+}
+
+function voice(f){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert("請用 Chrome 或 Safari");return;}
+  if(rc){rc.stop();rc=null;return;}
+  rc=new SR();rc.lang="zh-TW";rc.continuous=false;rc.interimResults=false;
+  rc.onresult=function(e){
+    D[f]=(D[f]||"")+e.results[0][0].transcript;
+    var ta=document.getElementById(f==="issue"?"tI":"tA");
+    if(ta)ta.value=D[f];
+    ck();
+  };
+  rc.onerror=rc.onend=function(){rc=null;};
+  rc.start();
+}
+
+function rst(){
+  D={dept:"",owner:"",item:"",isTask:false,status:"",issue:"",action:"",closeC:"",closeD:"",photo:null};
+  AI=null;step=0;
+  var dw=document.querySelector(".dw");
+  if(dw)dw.remove();
+  render();
+}
+
+render();
+
+</script>
+</body>
+</html>
